@@ -14,12 +14,13 @@ def get_similar_users(username):
 
     # Loop through the retrieved users
     for row in rows:
-        if row[0] == username:
+        if row[1] == username:
             continue
 
         user = {
-            "username": row[0],
-            "favorite_movies": set(row[4].split(","))
+            "username": row[1],
+            "name": row[2],
+            "favorite_movies": set(row[6].split(","))
         }
 
         similar_movies = profile_favorite_movies.intersection(
@@ -44,4 +45,4 @@ def get_similar_users(username):
     return similar_users_dict
 
 
-print(get_similar_users("jasonmcdaniel47"))
+print(get_similar_users("danielhenry59"))

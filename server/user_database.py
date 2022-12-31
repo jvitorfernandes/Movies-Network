@@ -7,7 +7,7 @@ def create_user_table():
     cursor = conn.cursor()
 
     cursor.execute(
-        "CREATE TABLE IF NOT EXISTS profiles (username text, name text, age integer, location text, favorite_movies text)")
+        "CREATE TABLE IF NOT EXISTS profiles (id text, username text, name text, email text, age integer, location text, favorite_movies text)")
 
     conn.commit()
     conn.close()
@@ -19,8 +19,8 @@ def insert_user_profiles(profiles):
     cursor = conn.cursor()
 
     for profile in profiles:
-        cursor.execute("INSERT INTO profiles VALUES (?, ?, ?, ?, ?)",
-                       (profile.username, profile.name, profile.age, profile.location, ",".join(profile.favorite_movies)))
+        cursor.execute("INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?)",
+                       (profile.user_id, profile.username, profile.name, profile.email, profile.age, profile.location, ",".join(profile.favorite_movies)))
 
     conn.commit()
     conn.close()
@@ -38,11 +38,13 @@ def get_user(username):
     conn.close()
 
     user = {
-        "username": row[0],
-        "name": row[1],
-        "age": row[2],
-        "location": row[3],
-        "favorite_movies": row[4].split(",")
+        "id": row[0],
+        "username": row[1],
+        "name": row[2],
+        "email": row[3],
+        "age": row[4],
+        "location": row[5],
+        "favorite_movies": row[6].split(",")
     }
 
     return user
@@ -62,8 +64,8 @@ def get_users(limit):
     return users
 
 
-user = get_user('michaelmiller31')
-print(type(user))
+# user = get_user('michaelmiller31')
+# print(type(user))
 
-users = get_users(10)
-print(type(users))
+# users = get_users(10)
+# print(type(users))

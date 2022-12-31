@@ -2,10 +2,10 @@ from flask import Flask, jsonify
 from user_database import get_user
 from similar_users import get_similar_users
 
-app = Flask(__name__)
+api = Flask(__name__)
 
 
-@app.route("/user/<string:username>")
+@api.route("/api/user/<string:username>")
 def user(username):
     user = get_user(username)
     user["similar_users"] = get_similar_users(username)
@@ -13,4 +13,4 @@ def user(username):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    api.run(debug=True)
