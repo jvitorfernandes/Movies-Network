@@ -6,7 +6,9 @@ import random
 
 
 def generate_users(n):
-
+    """
+    Returns a list of UserProfile objects generated with the Faker library.
+    """
     fake = Faker()
 
     # https://www.kaggle.com/datasets/harshitshankhdhar/imdb-dataset-of-top-1000-movies-and-tv-shows
@@ -27,8 +29,9 @@ def generate_users(n):
                               email, age, location, favorite_movies)
         profiles.append(profile)
 
-    me = UserProfile(1001, "jvfernandes", "João Vítor Fernandes", "fernandesjvb@gmail.com", 26,
-                     "Austin, TX", ["The Worst Person In the World", "Whiplash", "Marcel the Shell with Shoes On", "Gladiator", "Inglourious Basterds", "Interstellar", "The Lion King", "Majo no takkyûbin"])
+    me = UserProfile(1001, "jvfernandes", "João Vítor Fernandes", "fernandesjvb@gmail.com", 26, "Austin, TX",
+                     ["The Worst Person In the World", "Whiplash", "Marcel the Shell with Shoes On", "Gladiator",
+                      "Inglourious Basterds", "Interstellar", "The Lion King", "Majo no takkyûbin"])
     profiles.append(me)
     return profiles
 

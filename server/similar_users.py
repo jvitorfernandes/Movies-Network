@@ -3,7 +3,9 @@ import json
 
 
 def jaccard_similarity(set_a, set_b):
-
+    """
+    Calculates the Jaccard similarity between two sets
+    """
     intersection = set_a.intersection(set_b)
     intersection_size = len(intersection)
     union_size = (len(set_a) + len(set_b)) - intersection_size
@@ -13,6 +15,9 @@ def jaccard_similarity(set_a, set_b):
 
 
 def get_similar_users(username):
+    """
+    Returns a dictionary of the 5 users with the highest Jaccard similarity relative to the given user.
+    """
     profile = get_user(username)
     profile_favorite_movies = set(profile["favorite_movies"])
     rows = get_users(1001)
@@ -35,10 +40,8 @@ def get_similar_users(username):
         profile_movies_set = set(profile["favorite_movies"])
         user_movies_set = set(row[6].split(","))
 
-        user["similar_movies"] = list(profile_movies_set.intersection(
-            user_movies_set))
-        user["similarity"] = jaccard_similarity(
-            profile_movies_set, user_movies_set)
+        user["similar_movies"] = list(profile_movies_set.intersection(user_movies_set))
+        user["similarity"] = jaccard_similarity(profile_movies_set, user_movies_set)
 
         similar_users.append(user)
 
@@ -51,4 +54,4 @@ def get_similar_users(username):
     return similar_users_dict
 
 
-# print(get_similar_users("williamcooper34"))
+# print(get_similar_users("jvfernandes"))
