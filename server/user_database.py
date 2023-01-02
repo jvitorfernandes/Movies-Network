@@ -1,4 +1,5 @@
 import sqlite3
+from movies_database import get_movies
 
 
 def create_user_table():
@@ -37,17 +38,23 @@ def get_user(username):
     conn.commit()
     conn.close()
 
+    movies_data = get_movies(row[6].split(","))
+    # Will send a list of movies to the movies database and get a list of dicts: movie name and url
     user = {
-        "id": row[0],
+        "user_id": row[0],
         "username": row[1],
         "name": row[2],
         "email": row[3],
         "age": row[4],
         "location": row[5],
-        "favorite_movies": row[6].split(",")
+        "favorite_movies": row[6].split(","),
+        "movies_data": movies_data
     }
 
     return user
+
+
+# print(get_user("judithstokes42"))
 
 
 def get_users(limit):

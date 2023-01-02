@@ -11,3 +11,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+img {
+  width: 100px;
+}
+
+a {
+  text-color: #5c6ae0
+}
+
+.emoji {
+  width: 24px;
+  display: inline-block;
+  text-align: center;
+}
+
+.userbody {
+  min-height: calc(100vh - 5rem)
+}
+
+.container {
+  padding: 5em 0 5em 0;
+}

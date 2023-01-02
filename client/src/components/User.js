@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, useParams } from "react-router-dom";
-import { EnvelopeAt } from "react-bootstrap-icons";
+import { PersonCircle } from "react-bootstrap-icons";
 
 export default function User() {
   const [data, setData] = useState([{}]);
@@ -18,36 +18,61 @@ export default function User() {
   return (
     <Router>
       <Route path="/user/:username">
-        <div>
+        <div className="userbody">
           {typeof data["similar_users"] === "undefined" ||
-          typeof data["favorite_movies"] === "undefined" ? (
+          typeof data["favorite_movies"] === "undefined" ||
+          typeof data["movies_data"] === "undefined" ? (
             <p> </p>
           ) : (
             <>
               <div className="container">
+                <h1>{data["name"]}</h1>
                 <div className="row">
-                  <div className="col-md-9">
-                    <h2>{data["name"]}</h2>
-                    <ul>
-                      <li>{data["email"]}</li>
-                      <li>Age: {data["age"]}</li>
-                      <li>Location: {data["location"]}</li>
+                  <div className="col-md-6">
+                    <ul className="list-unstyled">
+                      <li>
+                        <span className="emoji">✉️</span> {data["email"]}
+                      </li>
+                      {/* <li>Age: {data["age"]}</li> */}
+                      <li>
+                        <span className="emoji">📍</span> {data["location"]}
+                      </li>
                     </ul>
                     <h4>Favorite Movies:</h4>
-                    <ul>
-                      {data["favorite_movies"].map((movie, i) => (
-                        <li key={i}>{movie}</li>
+
+                    <div className="row mt-4">
+                      {data["movies_data"].map((movie, i) => (
+                        <div className="col-lg-3 col-sm-6" key={i}>
+                          <div className="d-flex">
+                            <figure className="figure">
+                              <img
+                                src={movie["url"]}
+                                alt=""
+                                className="rounded"
+                                width="100"
+                                height="146.266"
+                              ></img>
+                              <figcaption className="figure-caption">
+                                {movie["movie"]}
+                              </figcaption>
+                            </figure>
+                          </div>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
-                  <div className="col-md-3">
+                  <div className="col-md-5">
                     <h4>Similar Users:</h4>
-                    <ul>
+                    <ul className="list-unstyled">
                       {Object.keys(data["similar_users"]).map((key, index) => {
                         return (
-                          <li>
+                          <li key={index}>
+                            <PersonCircle
+                              color="royalblue"
+                              className="m-2"
+                              size={20}
+                            />
                             <a
-                              key={index}
                               href={
                                 "/user/" +
                                 data["similar_users"][key]["username"]

@@ -2,11 +2,20 @@ from user_database import get_users, get_user
 import json
 
 
+def jaccard_similarity(set_a, set_b):
+
+    intersection = set_a.intersection(set_b)
+    intersection_size = len(intersection)
+    union_size = (len(set_a) + len(set_b)) - intersection_size
+    s_index = float(intersection_size) / union_size
+
+    return s_index
+
+
 def get_similar_users(username):
-    # Connect to the database
     profile = get_user(username)
     profile_favorite_movies = set(profile["favorite_movies"])
-    rows = get_users(10)
+    rows = get_users(1001)
 
     # Create a list to store the similar users
     similar_users = []
@@ -20,19 +29,16 @@ def get_similar_users(username):
         user = {
             "username": row[1],
             "name": row[2],
-            "favorite_movies": set(row[6].split(","))
+            "favorite_movies": row[6].split(",")
         }
 
-        similar_movies = profile_favorite_movies.intersection(
-            user["favorite_movies"])
-        intersection = len(similar_movies)
-        union = (len(profile_favorite_movies) +
-                 len(user["favorite_movies"])) - intersection
-        s_index = float(intersection) / union
+        profile_movies_set = set(profile["favorite_movies"])
+        user_movies_set = set(row[6].split(","))
 
-        user["similar_movies"] = list(similar_movies)
-        user["favorite_movies"] = list(user["favorite_movies"])
-        user["similarity"] = s_index
+        user["similar_movies"] = list(profile_movies_set.intersection(
+            user_movies_set))
+        user["similarity"] = jaccard_similarity(
+            profile_movies_set, user_movies_set)
 
         similar_users.append(user)
 
@@ -45,4 +51,4 @@ def get_similar_users(username):
     return similar_users_dict
 
 
-print(get_similar_users("danielhenry59"))
+# print(get_similar_users("williamcooper34"))
