@@ -7,7 +7,10 @@ export default function User() {
   const { username } = useParams();
 
   useEffect(() => {
-    fetch("/api/user/" + username)
+    const _apiBase = (process.env.REACT_APP_API_URL || "").replace(/\/$/, "");
+    const apiBase = _apiBase === "" ? "" : _apiBase;
+    const url = apiBase + "/api/user/" + username;
+    fetch(url)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
