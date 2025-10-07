@@ -37,6 +37,6 @@ To get the app up and running, follow these steps:
     ```
 
 ## Usage
-Open your browser and go to ```http://localhost:3000/user/jvfernandes/``` to use the app.
+Open your browser and go to ```http://localhost:3000/user/leslieshields43``` to use the app.
 
 The API should be up and running on ```http://127.0.0.1:5000/```. You can navigate to ```http://127.0.0.1:5000/api/user/jvfernandes``` to see the json response for that request.
