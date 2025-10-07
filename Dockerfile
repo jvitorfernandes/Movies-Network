@@ -13,20 +13,24 @@ RUN npm run build
 FROM python:3.12-slim
 
 # Install system packages required by numpy/pandas and building wheels
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     build-essential \
     gfortran \
-    libatlas-base-dev \
+    libopenblas-dev \
+    liblapack-dev \
     python3-dev \
     python3-distutils \
+    pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app/server
 
 # Copy and install python requirements
 COPY server/requirements.txt ./requirements.txt
-RUN pip install --upgrade pip setuptools wheel
-RUN pip install -r requirements.txt
+# Upgrade packaging tools and install requirements in one layer; prefer binary wheels when available
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install --no-cache-dir --prefer-binary -r requirements.txt
 
 # Copy server source
 COPY server/ .
